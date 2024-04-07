@@ -14,8 +14,10 @@ from vocode.streaming.models.synthesizer import (
     PollySynthesizerConfig,
     StreamElementsSynthesizerConfig,
     SynthesizerConfig,
+    DeepgramSynthesizerConfig,
     SynthesizerType,
 )
+from vocode.streaming.synthesizer.deepgram_synthesizer import DeepgramSynthesizer
 from vocode.streaming.synthesizer.azure_synthesizer import AzureSynthesizer
 from vocode.streaming.synthesizer.eleven_labs_synthesizer import ElevenLabsSynthesizer
 from vocode.streaming.synthesizer.google_synthesizer import GoogleSynthesizer
@@ -72,5 +74,10 @@ class SynthesizerFactory:
             return PollySynthesizer(
                 synthesizer_config, logger=logger, aiohttp_session=aiohttp_session
             )
+        elif isinstance(synthesizer_config, DeepgramSynthesizerConfig):
+            return DeepgramSynthesizer(
+                synthesizer_config, logger=logger, aiohttp_session=aiohttp_session
+            )
         else:
             raise Exception("Invalid synthesizer config")
+
