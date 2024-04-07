@@ -26,6 +26,7 @@ class SynthesizerType(str, Enum):
     COQUI = "synthesizer_coqui"
     BARK = "synthesizer_bark"
     POLLY = "synthesizer_polly"
+    DEEPGRAM = "synthesizer_deepgram"
 
 
 class SentimentConfig(BaseModel):
@@ -210,3 +211,15 @@ class PollySynthesizerConfig(SynthesizerConfig, type=SynthesizerType.POLLY.value
     language_code: str = DEFAULT_POLLY_LANGUAGE_CODE
     voice_id: str = DEFAULT_POLLY_VOICE_ID
     sampling_rate: int = DEFAULT_POLLY_SAMPLING_RATE
+
+class DeepgramSynthesizerConfig(BaseModel):
+    api_key: str
+    model: Optional[str] = None
+    voice: Optional[str] = None
+
+    class Config:
+        fields = {
+            "api_key": {"env": "DEEPGRAM_API_KEY"},
+            "model": {"env": "DEEPGRAM_MODEL"},
+            "voice": {"env": "DEEPGRAM_VOICE"},
+        }
